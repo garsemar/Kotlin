@@ -1,4 +1,4 @@
-package cat.itb.martigarcia.dam.m03.uf1
+package cat.itb.martigarcia7e4.dam.m03.uf1.data
 import java.util.*
 
 class Empleada(val name: String, val lastname: String, val desp: Int) {
