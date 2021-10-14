@@ -5,5 +5,5 @@ fun main() {
     val scan = Scanner(System.`in`)
     //NextNumber
     val userInout6 = scan.nextInt()
-    println("Despres ve el $userInout6")
+    println("Després ve el $userInout6")
 }

@@ -7,9 +7,8 @@ fun main(){
     val num1 = scan.nextInt()
     val num2 = scan.nextInt()
 
-    if(num1 % num2 == 0){
-        println("True")
-    }else{
-        println("False")
-    }
+    val res = num1/num2
+    val por = num1%num2
+
+    println("$num1 dividit entre $num2 es $res mòdul $por")
 }

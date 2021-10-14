@@ -4,7 +4,7 @@ import java.util.*
 
 fun main(){
     val scan = Scanner(System.`in`)
-    var edad = scan.nextInt()
+    val edad = scan.nextInt()
 
     if(edad in 11..19){
         println("True")

@@ -6,7 +6,7 @@ fun main(){
     val scan = Scanner(System.`in`)
     val num = scan.nextInt()
 
-    if(num == 5 || num == 10 || num == 20 || num == 50 || num == 100 || num == 500){
+    if(num % 2 == 0){
         println("True")
     }else{
         println("False")
