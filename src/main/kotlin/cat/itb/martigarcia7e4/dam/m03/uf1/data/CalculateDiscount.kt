@@ -4,8 +4,9 @@ import java.util.*
 
 fun main(){
     val scan = Scanner(System.`in`)
-    var original = scan.nextInt()
-    var actual = scan.nextInt()
+    val original = scan.nextInt()
+    val actual = scan.nextInt()
 
-    println((actual*100)/original)
+    val res = (actual*100)/original
+    println("$res%")
 }
