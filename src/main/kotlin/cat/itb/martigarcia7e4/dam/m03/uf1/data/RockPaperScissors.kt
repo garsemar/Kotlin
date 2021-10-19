@@ -4,7 +4,9 @@ import java.util.*
 
 fun main(){
     val scan = Scanner(System.`in`)
+    print("Selecciona que vols jugar(1 piedra, 2 papel, 3 tijera): ")
     val player1 = scan.nextInt()
+    print("Selecciona que vols jugar(1 piedra, 2 papel, 3 tijera): ")
     val player2 = scan.nextInt()
 
     //1 piedra, 2 papel, 3 tijera
