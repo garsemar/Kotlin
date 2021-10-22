@@ -8,5 +8,7 @@ fun main(){
 
     if(edad >= 18){
         println("ets major d'edat")
+    }else{
+        println("ets menor d'edat")
     }
 }
