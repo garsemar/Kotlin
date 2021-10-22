@@ -7,7 +7,7 @@ fun main(){
     print("Introdueix un any: ")
     val year = scan.nextInt()
 
-    if(year % 100 == 0){
+    if(year % 100 == 0 && year % 400 != 0){
         println("$year no és any de traspàs")
     }else if(year % 4 == 0 || year % 400 == 0){
         println("$year és any de traspàs")
@@ -15,4 +15,3 @@ fun main(){
         println("$year no és any de traspàs")
     }
 }
-
