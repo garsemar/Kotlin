@@ -1,4 +1,4 @@
-package cat.itb.martigarcia7e4.dam.m03.uf1.data.seleccio
+package cat.itb.martigarcia7e4.dam.m03.uf1.seleccio
 
 import java.util.*
 import kotlin.math.abs
