@@ -1,4 +1,4 @@
-package cat.itb.martigarcia7e4.dam.m03.uf1.data
+package cat.itb.martigarcia7e4.dam.m03.uf1.data.seleccio
 
 import java.util.*
 
@@ -8,8 +8,8 @@ fun main(){
     val costat1 = scan.nextInt()
     val costat2 = scan.nextInt()
 
-    var areaCir = diamCir*Math.PI
-    var areaQua = costat1*costat2
+    val areaCir = diamCir*Math.PI
+    val areaQua = costat1*costat2
 
     if(areaCir > areaQua){
         println("Compra la rodona")

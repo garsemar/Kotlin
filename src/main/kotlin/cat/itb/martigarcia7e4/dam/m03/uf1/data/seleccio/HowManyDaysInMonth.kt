@@ -1,4 +1,4 @@
-package cat.itb.martigarcia7e4.dam.m03.uf1.data
+package cat.itb.martigarcia7e4.dam.m03.uf1.data.seleccio
 
 import java.util.*
 
