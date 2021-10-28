@@ -1,4 +1,4 @@
-package cat.itb.martigarcia7e4.dam.m03.uf1.project
+package cat.itb.martigarcia7e4.dam.m03.uf1.data.project
 
 import java.time.Year
 import java.util.*
