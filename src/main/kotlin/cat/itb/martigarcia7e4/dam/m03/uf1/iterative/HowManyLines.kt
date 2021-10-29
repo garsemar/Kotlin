@@ -1,11 +1,15 @@
 package cat.itb.martigarcia7e4.dam.m03.uf1.iterative
-
 import java.util.*
 
 fun main(){
     val scan = Scanner(System.`in`)
-    print("Introdueix un numero: ")
-    var num = scan.nextInt()
+    var counter = 0
+    var text = ""
+    println("Introdueix un text: ")
 
-
+    while(!text.equals("END")){
+        text = scan.nextLine()
+        counter += 1
+    }
+    println(counter)
 }

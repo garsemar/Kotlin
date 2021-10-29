@@ -6,11 +6,9 @@ fun main(){
     val scan = Scanner(System.`in`)
     print("Introdueix un numero: ")
     val num = scan.nextInt()
-    var mult = 1
 
     for(x in 1..9){
-        val res = mult * num
-        println("$mult * $num = $res")
-        mult += 1
+        val res = x * num
+        println("$x * $num = $res")
     }
 }
