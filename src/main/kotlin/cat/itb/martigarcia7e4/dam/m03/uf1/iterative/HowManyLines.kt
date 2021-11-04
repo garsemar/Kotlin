@@ -7,9 +7,9 @@ fun main(){
     var text = ""
     println("Introdueix un text: ")
 
-    while(!text.equals("END")){
+    while(text != ("END")){
         text = scan.nextLine()
         counter += 1
     }
-    println(counter)
+    println(counter-1)
 }
