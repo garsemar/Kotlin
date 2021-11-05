@@ -10,18 +10,17 @@ fun main(){
 
     var punts = 0
     var nom = ""
-    var winner = Player(nom, punts)
+    val winner = Player(nom, punts)
 
     while(true){
         print("Introdueix un nom: ")
         nom = scan.next()
+        nom += scan.nextLine()
         if(nom == "END") break
 
         print("Introdueix els punts: ")
         punts = scan.nextInt()
-        winner = Player(nom,punts)
-
-        if(winner.score < punts){
+        if(punts > winner.score){
             winner.score = punts
             winner.name = nom
         }
