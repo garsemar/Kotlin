@@ -24,6 +24,6 @@ fun main() {
 
     for(i in 1..list.size){
         list2.add(list[i-1] + (21*list[i-1])/100)
-        //println(list[i-1]+"IVA = "+list2[i-1])
+        println(list[i-1].toString()+" IVA = "+list2[i-1])
     }
 }
