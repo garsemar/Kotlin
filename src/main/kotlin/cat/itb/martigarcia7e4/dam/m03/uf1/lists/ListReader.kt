@@ -20,6 +20,7 @@ fun readIntList(): MutableList<Int> {
     return list
 }
 
+
 fun main(){
     readIntList()
 }
