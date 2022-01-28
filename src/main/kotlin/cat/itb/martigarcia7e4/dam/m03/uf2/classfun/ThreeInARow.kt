@@ -1,12 +1,13 @@
 package cat.itb.martigarcia7e4.dam.m03.uf2.classfun
 
 import cat.itb.martigarcia7e4.dam.m03.uf1.data.project.scan
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.UpperCase
 import java.util.*
 
 class ThreeInARow{
     private val matrix = MutableList(3){MutableList(3){"."}}
-    private val playerX = Players("x")
-    private val playery = Players("0")
+    private val playerX = Players("X")
+    private val playerY = Players("0")
     fun printTauler(){
         for(i in matrix.indices){
             for(j in matrix.indices){
@@ -18,18 +19,22 @@ class ThreeInARow{
     fun input(){
         while(true) {
             val listX = playerX.inputTable(matrix)
-            val listY = playery.inputTable(matrix)
-            matrix[listX[0]][scan.nextInt()] = "X"
-            matrix[scan.nextInt()][scan.nextInt()] = "0"
+            matrix[listX[0]][listX[1]] = "X"
+            printTauler()
+            check(playerX)
+            val listY = playerY.inputTable(matrix)
+            matrix[listY[0]][listY[1]] = "0"
+            printTauler()
+            check(playerY)
         }
     }
-    /*private fun check(){
+    private fun check(play: Players){
         for(i in matrix.indices){
-            for(j in matrix.indices){
-
+            if(matrix[i][0] == play.type && matrix[i][1] == play.type && matrix[i][2] == play.type){
+                println("guanyen les ${play.type}")
             }
         }
-    }*/
+    }
 }
 data class Players(val type: String){
     fun inputTable(matrix: MutableList<MutableList<String>>): List<Int>{
