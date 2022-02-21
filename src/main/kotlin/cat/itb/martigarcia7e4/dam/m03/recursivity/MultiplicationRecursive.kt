@@ -2,8 +2,11 @@ package cat.itb.martigarcia7e4.dam.m03.recursivity
 
 import java.util.*
 
-fun mult(num1: Int, num2: Int){
-
+fun mult(num: Int, num2: Int): Int{
+    if(num2 == 0){
+        return 0
+    }
+    return num + mult(num, num2-1)
 }
 
 fun main(){
@@ -11,5 +14,5 @@ fun main(){
     val num = scan.nextInt()
     val num2 = scan.nextInt()
 
-    println(num*num2)
+    println(mult(num, num2))
 }
