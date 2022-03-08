@@ -9,5 +9,5 @@ fun main() {
     val path : Path = Path.of(scan.next())
     val files : List<Path> = path.listDirectoryEntries()
     val onlyFiles : List<Path> = path.listDirectoryEntries("*.")
-    
+
 }
