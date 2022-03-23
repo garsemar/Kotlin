@@ -1,10 +1,7 @@
 package cat.itb.martigarcia7e4.dam.m03.uf3.serializable
 
-import kotlinx.serialization.SerialName
 import java.util.*
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
+import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
 import kotlin.io.path.*
 
@@ -15,16 +12,32 @@ fun main() {
     val scan = Scanner(System.`in`)
     val path = Path("src/main/kotlin/cat/itb/martigarcia7e4/dam/m03/uf3/resources/buyList.json")
 
-    var preJson: MutableList<BuyList>? = null
-    if(path.exists()) {
-        preJson = Json.decodeFromString(path.readText())
+    val buyList: MutableList<BuyList>
+
+    if(path.readLines().isNotEmpty()){
+        val preJson: MutableList<BuyList> = Json.decodeFromString(path.readText())
+        buyList = preJson
+        buyList.add(BuyList(scan.nextInt(), scan.next(), scan.nextDouble()))
+    }
+    else{
+        buyList = mutableListOf(BuyList(scan.nextInt(), scan.next(), scan.nextDouble()))
     }
 
-    val buyList: MutableList<BuyList>? = preJson
-
-    println(buyList)
-
-    //buyList.add(BuyList(scan.nextInt(), scan.next(), scan.nextDouble()))
+    var preu: Double
+    val preuList = mutableListOf<Double>()
+    println("-------- Compra --------")
+    for(item in buyList){
+        preu = item.preu * item.quantitat
+        preuList.add(preu)
+        println("${item.quantitat} ${item.nom} (${item.preu}€) - ${preu}€")
+    }
+    preu = 0.00
+    for(item in preuList){
+        preu += item
+    }
+    println("-------------------------")
+    println("Total: ${preu}€")
+    println("-------------------------")
 
     val json = Json.encodeToString(buyList)
     path.writeText(json)
