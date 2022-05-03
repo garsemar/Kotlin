@@ -32,11 +32,10 @@ fun sumPrices(products: List<CarpentryShop>): Int {
     return sum
 }
 
-fun readProduct(scanner: Scanner) : CarpentryShop{
-    val type = scanner.next()
-    when(type){
-        "Taulell" -> return readTaulell(scanner)
-        else -> return readLlisto(scanner)
+fun readProduct(scanner: Scanner) : CarpentryShop {
+    return when (scanner.next()) {
+        "Taulell" -> readTaulell(scanner)
+        else -> readLlisto(scanner)
     }
 }
 
