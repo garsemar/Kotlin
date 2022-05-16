@@ -7,7 +7,7 @@ import kotlin.io.path.*
 fun main() {
     val scan = Scanner(System.`in`)
 
-    val path : Path = Path.of(scan.next())
+    val path : Path = Path(scan.next())
 
     if(path.exists()){
         println(true)
