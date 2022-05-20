@@ -1,17 +1,18 @@
 package cat.itb.martigarcia7e4.dam.m03.uf5.dadescovid
 
-import cat.itb.martigarcia7e4.dam.m03.uf5.dadescovid.model.ApiConnect
+import cat.itb.martigarcia7e4.dam.m03.uf5.dadescovid.model.CountryCode
+import cat.itb.martigarcia7e4.dam.m03.uf5.dadescovid.model.Covid
 
 suspend fun main() {
-    val api = ApiConnect("https://api.covid19api.com/summary")
+    val api = ApiConnect()
 
-    val covid = api.getData()
+    val covid = api.getCovidData()
+    val countryCode = api.getCountryCode()
+    val countryTranslate = api.getCountryTranslate()
 
-    covid.Countries.forEach {
-        if(it.CountryCode == "ES") {
-            println(it.Country)
-            println(it.TotalConfirmed)
-            println(it.TotalDeaths)
-        }
-    }
+    val covidStats = CovidStats(covid)
+
+    covidStats.totalDeaths()
+    covidStats.newConfirmed()
+    covidStats.euData()
 }
