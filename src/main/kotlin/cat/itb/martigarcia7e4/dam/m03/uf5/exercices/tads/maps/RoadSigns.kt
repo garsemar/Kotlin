@@ -1,9 +1,19 @@
 package cat.itb.martigarcia7e4.dam.m03.uf5.exercices.tads.maps
 
-fun main(){
-    // fes una llista d'string
-    val list = listOf("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
+import java.util.*
 
-    // printa hola utilitzant la llista
-    println("Hola ${list[0]}")
+fun main() {
+    val scan = Scanner(System.`in`)
+
+    val map = mutableMapOf<Int, String>()
+
+    repeat(scan.nextInt()){
+        map[scan.nextInt()] = scan.next()
+    }
+
+    repeat(scan.nextInt()){
+        val res = map[scan.nextInt()] ?: "No hi ha cartell"
+
+        println(res)
+    }
 }
