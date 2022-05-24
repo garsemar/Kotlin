@@ -1,4 +1,4 @@
-package cat.itb.martigarcia7e4.dam.m03.uf5.dadescovid.model
+package cat.itb.martigarcia7e4.dam.m03.uf5.dadescovid.model.covid
 
 import kotlinx.serialization.Serializable
 

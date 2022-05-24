@@ -1,6 +1,7 @@
 package cat.itb.martigarcia7e4.dam.m03.uf5.dadescovid
 
 import cat.itb.martigarcia7e4.dam.m03.uf5.dadescovid.model.*
+import cat.itb.martigarcia7e4.dam.m03.uf5.dadescovid.model.covid.Covid
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.features.json.*
