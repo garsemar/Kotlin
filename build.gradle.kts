@@ -20,6 +20,7 @@ dependencies {
     implementation("io.ktor:ktor-client-core:1.6.7")
     implementation("io.ktor:ktor-client-cio:1.6.7")
     implementation("io.ktor:ktor-client-serialization:1.6.7")
+    implementation("org.xerial:sqlite-jdbc:3.36.0.3")
     testImplementation(kotlin("test"))
 }
 
