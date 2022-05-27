@@ -21,19 +21,26 @@ class UI(val scan: Scanner) {
     private fun addBeach() {
         println("Afegir platges")
         println("ID Nom Ciutat Qualitat")
-        beachApp.addBeach(scan.nextInt(), scan.next(), scan.next(), scan.nextInt())
+        beachApp.addBeach(scan.nextInt(), scan.next(), scan.next(), scan.nextFloat())
         println("Afegida amb exit")
     }
     private fun modifyQuality() {
         println("Modificar qualitat")
-        println("ID Nova qualitat")
-        beachApp.modifyQuality(scan.nextInt(), scan.nextInt())
+        println("ID NovaQualitat")
+        beachApp.modifyQuality(scan.nextInt(), scan.nextFloat())
+        println("Modificada amb exit")
     }
     private fun listBeaches() {
         println("Llistat de platges")
         beachApp.listBeaches().forEach { println(it) }
     }
     private fun resum() {
-        TODO("Not yet implemented")
+        println("Resum")
+        val beachMap = beachApp.resum()
+        var i = 0
+        for(value in beachMap){
+            println("$i. ${value.key} (${value.value})")
+            i += 1
+        }
     }
 }

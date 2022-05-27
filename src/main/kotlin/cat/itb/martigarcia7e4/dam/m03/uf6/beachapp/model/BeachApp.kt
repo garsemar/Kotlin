@@ -11,13 +11,19 @@ class BeachApp(val scan: Scanner) {
         beachDB.connect()
         beachDAO.createTableIfNotExists()
     }
-    fun addBeach(id: Int, name: String, city: String, waterQuality: Int){
+    fun addBeach(id: Int, name: String, city: String, waterQuality: Float){
         beachDAO.insert(Beach(id, name, city, waterQuality))
     }
     fun listBeaches(): List<Beach> {
         return beachDAO.list()
     }
-    fun modifyQuality(id: Int, waterQuality: Int) {
-        beachDAO.findById(id)
+    fun modifyQuality(id: Int, waterQuality: Float) {
+        val beach = beachDAO.findById(id)
+        beach.waterQuality = waterQuality
+        beachDAO.update(beach)
+    }
+    fun resum(): Map<String, Float> {
+        return beachDAO.averageWaterQualityByCity().toList().sortedByDescending { (_, value) -> value}.toMap()
+
     }
 }

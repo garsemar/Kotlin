@@ -8,7 +8,7 @@ class BeachDAO(val database: BeachDB) {
     val connection: Connection get() = database.connection!!
 
     fun createTableIfNotExists() {
-        val createQuery = "CREATE TABLE IF NOT EXISTS beach(id INTEGER PRIMARY KEY, beachName VARCHAR, city VARCHAR, waterQuality INTEGER)"
+        val createQuery = "CREATE TABLE IF NOT EXISTS beach(id INTEGER PRIMARY KEY, beachName VARCHAR, city VARCHAR, waterQuality FLOAT)"
         val createStatement = connection.prepareStatement(createQuery)
         createStatement.execute()
     }
@@ -26,17 +26,18 @@ class BeachDAO(val database: BeachDB) {
         statment.setInt(1, beach.id)
         statment.setString(2, beach.name)
         statment.setString(3, beach.city)
-        statment.setInt(4, beach.waterQuality)
+        statment.setFloat(4, beach.waterQuality)
         statment.execute()
     }
 
     fun update(beach: Beach) {
-        val query = "INSERT INTO beach(id, beachName, city, waterQuality) VALUES(?, ?, ?, ?)"
+        val query = "UPDATE beach SET id=?, beachName=?, city=?, waterQuality=? WHERE id = ?"
         val statment = connection.prepareStatement(query)
         statment.setInt(1, beach.id)
         statment.setString(2, beach.name)
         statment.setString(3, beach.city)
-        statment.setInt(4, beach.waterQuality)
+        statment.setFloat(4, beach.waterQuality)
+        statment.setInt(5, beach.id)
         statment.execute()
     }
 
@@ -58,11 +59,25 @@ class BeachDAO(val database: BeachDB) {
         val id = result.getInt("id")
         val name = result.getString("beachName")
         val city = result.getString("city")
-        val waterQuality = result.getInt("waterQuality")
+        val waterQuality = result.getFloat("waterQuality")
         return Beach(id, name, city, waterQuality)
     }
 
-    fun findById(id: Int) {
-        TODO("Not yet implemented")
+    fun findById(id: Int): Beach {
+        val query = "SELECT * FROM beach WHERE id = ?"
+        val statment = connection.prepareStatement(query)
+        statment.setInt(1, id)
+        val result = statment.executeQuery()
+        return toBeach(result)
+    }
+    fun averageWaterQualityByCity(): MutableMap<String, Float> {
+        val query = "SELECT city, AVG(waterQuality) FROM beach GROUP BY city"
+        val statment = connection.prepareStatement(query)
+        val result = statment.executeQuery()
+        val beachMap = mutableMapOf<String, Float>()
+        while (result.next()){
+            beachMap[result.getString("city")] = result.getFloat("AVG(waterQuality)")
+        }
+        return beachMap
     }
 }
