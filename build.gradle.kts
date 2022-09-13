@@ -21,6 +21,8 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:1.6.7")
     implementation("io.ktor:ktor-client-serialization:1.6.7")
     implementation("org.xerial:sqlite-jdbc:3.36.0.3")
+    implementation("io.github.pdvrieze.xmlutil:core-jvm:0.84.2")
+    implementation("io.github.pdvrieze.xmlutil:serialization-jvm:0.84.2")
     testImplementation(kotlin("test"))
 }
 
