@@ -1,0 +1,17 @@
+<restaurants>
+    <restaurant type="tapes">
+        <name>Bar Pasqual</name>
+        <address>Avinguda Diagonal 232</address>
+        <owner>Joan Martí</owner>
+    </restaurant>
+    <restaurant type="restaurant de menú">
+        <name>Meravelles</name>
+        <address>Meridiana 111</address>
+        <owner>Maria Colomer</owner>
+    </restaurant>
+    <restaurant type="tapes">
+        <name>Tapitapes</name>
+        <address>Balmes 2</address>
+        <owner>Gustaf Michelin</owner>
+    </restaurant>
+</restaurants>
