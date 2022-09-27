@@ -7,7 +7,7 @@ import nl.adaptivity.xmlutil.serialization.XmlElement
 @Serializable
 @SerialName("ingredient")
 data class Ingredient(
-    @XmlElement(true) val ammount: String,
-    @XmlElement(true) val unit: String,
-    @XmlElement(true) val name: String
+    val ammount: String,
+    val unit: String,
+    val name: String
 )

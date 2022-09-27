@@ -5,9 +5,7 @@ import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlElement
 
 @Serializable
-@SerialName("recipe")
-data class Recipe(
-    @XmlElement(true) val name: String,
-    @XmlElement(true) val ingredients: Ingredients,
-    val dificulty: String
+@SerialName("ingredients")
+data class Ingredients(
+    @XmlElement(true) val ingredient: List<Ingredient>
 )
