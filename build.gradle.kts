@@ -10,6 +10,7 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    maven ( "https://jitpack.io" )
 }
 
 dependencies {
@@ -23,6 +24,7 @@ dependencies {
     implementation("org.xerial:sqlite-jdbc:3.36.0.3")
     implementation("io.github.pdvrieze.xmlutil:core-jvm:0.84.2")
     implementation("io.github.pdvrieze.xmlutil:serialization-jvm:0.84.2")
+    implementation("io.github.kotlin-telegram-bot.kotlin-telegram-bot:telegram:6.0.7")
     testImplementation(kotlin("test"))
 }
 

@@ -8,7 +8,7 @@ import kotlin.io.path.readText
 
 fun main() {
     val scan = Scanner(System.`in`)
-    val xml = Path("./src/main/kotlin/cat/itb/martigarcia7e4/dam2/m06/uf1/resources/restaurants.xml").readText()
+    val xml = Path("./src/main/resources/restaurants.xml").readText()
     val person: Restaurants = XML.decodeFromString(xml)
     println("Quin tipus de restaurant vols?")
     val type = scan.next()
