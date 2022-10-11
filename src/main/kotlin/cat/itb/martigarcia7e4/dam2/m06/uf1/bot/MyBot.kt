@@ -14,7 +14,7 @@ fun main() {
     val validCommands = listOf("/start", "/today", "/store", "/retrieve")
     val data = mutableMapOf<Long, MutableList<String>>()
     val bot = bot {
-        token = "5642176017:AAG4PAyQvWn3_WyOXKFOtfbij7s2dCfVhiw"
+        token = "5642176017:AAFZqsx5VdWZ_CRRONBozM7Q13rCgNjOrcs"
         dispatch {
             message(Filter.Sticker) {
                 bot.sendMessage(ChatId.fromId(message.chat.id), text = "You have received an awesome sticker \\o/")
@@ -44,5 +44,7 @@ fun main() {
             }
         }
     }
+    println("run")
     bot.startPolling()
+    println("aa")
 }
