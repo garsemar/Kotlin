@@ -4,14 +4,13 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-
 @Serializable
-data class Result(
-    @SerializedName("geometry") var geometry: Geometry
+data class GoogleGeo(
+    @SerializedName("results") var results: List<Result>
 )
 
 @Serializable
-data class GoogleGeo(
+data class Result(
     @SerializedName("geometry") var geometry: Geometry
 )
 

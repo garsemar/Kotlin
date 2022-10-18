@@ -1,5 +1,6 @@
 package cat.itb.martigarcia7e4.dam2.m06.uf1.mapBot.repositories
 
+import cat.itb.martigarcia7e4.dam2.m06.uf1.mapBot.model.GoogleGeo
 import cat.itb.martigarcia7e4.dam2.m06.uf1.mapBot.model.Result
 import cat.itb.martigarcia7e4.dam2.m06.uf1.mapBot.model.TMBRoute
 import io.ktor.client.*
@@ -19,10 +20,10 @@ class Api {
                 })
             }
         }
-        return client.get("https://api.tmb.cat/v1/planner/plan?app_id=$id&app_key=$key&fromPlace=41.$fromCords&toPlace=$toCords")
+        return client.get("https://api.tmb.cat/v1/planner/plan?app_id=$id&app_key=$key&fromPlace=$fromCords&toPlace=$toCords")
     }
-    suspend fun googleGeo(address: String): Result{
-        val key = "AIzaSyDyvlu0XhfxXe3hnaseC2dfEQlMn9yhFq8"
+    suspend fun googleGeo(address: String): GoogleGeo{
+        val key = "AIzaSyAg_-R_Qj--i1872sKSZMlN1wbQ3Z4FBq8"
         var formatAddress = address.replace(" ", "%20")
         formatAddress = formatAddress.replace("/", "%20")
         formatAddress = formatAddress.replace(",", "%20")
