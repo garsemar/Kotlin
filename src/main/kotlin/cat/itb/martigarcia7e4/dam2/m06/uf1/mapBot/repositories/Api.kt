@@ -23,7 +23,7 @@ class Api {
         return client.get("https://api.tmb.cat/v1/planner/plan?app_id=$id&app_key=$key&fromPlace=$fromCords&toPlace=$toCords")
     }
     suspend fun googleGeo(address: String): GoogleGeo{
-        val key = "AIzaSyAg_-R_Qj--i1872sKSZMlN1wbQ3Z4FBq8"
+        val key = ""
         var formatAddress = address.replace(" ", "%20")
         formatAddress = formatAddress.replace("/", "%20")
         formatAddress = formatAddress.replace(",", "%20")

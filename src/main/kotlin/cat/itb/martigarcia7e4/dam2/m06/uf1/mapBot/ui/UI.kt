@@ -1,5 +1,6 @@
 package cat.itb.martigarcia7e4.dam2.m06.uf1.mapBot.ui
 
+import cat.itb.martigarcia7e4.dam2.m06.uf1.mapBot.logic.Logic
 import cat.itb.martigarcia7e4.dam2.m06.uf1.mapBot.model.GoogleGeo
 import cat.itb.martigarcia7e4.dam2.m06.uf1.mapBot.model.Place
 import cat.itb.martigarcia7e4.dam2.m06.uf1.mapBot.model.Place.Companion.places
@@ -14,12 +15,13 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 
 class UI {
-    val api = Api()
+    private val api = Api()
+    private val logic = Logic()
     @OptIn(DelicateCoroutinesApi::class)
     fun runBot(){
         val validCommands = listOf("/start", "/help", "/set", "/list", "/delete", "/route")
         val bot = bot {
-            token = "5665193864:AAH2eJaACvA6hiXKCsM6My8BrltTWu0bXt8"
+            token = ""
             dispatch {
                 command("start") {
                     bot.sendMessage(chatId = ChatId.fromId(message.chat.id), text = "Try /help")
@@ -34,28 +36,20 @@ class UI {
                         /help - Show this message
                     """.trimIndent())
                 }
-                command("set"){
+                /*command("set"){
                     val input = message.text?.split(" ")
                     if (input?.size == 3) {
-                        GlobalScope.async {
-                            val cords = api.googleGeo(input[2]).results[0].geometry.location
-                            if(places[message.chat.id] == null){
-                                places[message.chat.id] = mutableListOf(Place(input[1], "${cords.lat},${cords.lng}"))
-                            }
-                            else{
-                                places[message.chat.id]?.add(Place(input[1], "${cords.lat},${cords.lng}"))
-                            }
-                        }
+                        logic.addPlace(message.chat.id, input)
                         bot.sendMessage(chatId = ChatId.fromId(message.chat.id), text = "Place saved correctly")
                     }
                     else{
                         bot.sendMessage(chatId = ChatId.fromId(message.chat.id), text = "Invalid command")
                     }
-                }
+                }*/
                 command("list"){
                     if(places.isNotEmpty()) {
                         places[message.chat.id]?.forEach {
-                            bot.sendMessage(chatId = ChatId.fromId(message.chat.id), text = "${it.name},${it.cords}")
+                            bot.sendMessage(chatId = ChatId.fromId(message.chat.id), text = "${it.name}: ${it.cords}")
                         }
                     }
                     else{
@@ -75,5 +69,6 @@ class UI {
             }
         }
         bot.startPolling()
+        println("Running!")
     }
 }
