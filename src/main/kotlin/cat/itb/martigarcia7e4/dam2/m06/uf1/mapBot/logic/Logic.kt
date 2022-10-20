@@ -12,21 +12,23 @@ import kotlinx.coroutines.async
 class Logic {
     val api = Api()
     @OptIn(DelicateCoroutinesApi::class)
-    fun addPlace(id: Long, input: List<String>){
-        GlobalScope.async {
-            val cords = api.googleGeo(input[2]).results[0].geometry.location
-            if(places[id] == null){
-                places[id] = mutableListOf(Place(input[1], "${cords.lat},${cords.lng}"))
+    fun addPlace(id: Long, input: List<String>): Boolean {
+        if(places[id]?.find { it.name == input[1] } == null){
+            GlobalScope.async {
+                val cords = api.googleGeo(input[2]).results[0].geometry.location
+                if(places[id] == null){
+                    places[id] = mutableListOf(Place(input[1], "${cords.lat},${cords.lng}"))
+                }
+                else{
+                    places[id]?.add(Place(input[1], "${cords.lat},${cords.lng}"))
+                }
             }
-            else{
-                places[id]?.add(Place(input[1], "${cords.lat},${cords.lng}"))
-            }
+            return true
         }
+        return false
     }
-    suspend fun xd(input: List<String>): Location {
-        val jaj = GlobalScope.async {
-            api.googleGeo(input[2]).results[0].geometry.location
-        }
-        return jaj.await()
+
+    fun route(id: Long, input: List<String>){
+
     }
 }

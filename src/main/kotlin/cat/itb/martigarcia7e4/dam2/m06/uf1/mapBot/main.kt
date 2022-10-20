@@ -8,8 +8,7 @@ fun main() {
     val api = Api()
     val ui = UI()
 
-    //ui.runBot()
-    Logic().addPlace(1, listOf("/set", "casa", "c/ter,33,barcelona"))
+    ui.runBot()
 
     /*println(api.googleGeo("C/ter 33 barcelona"))
     //GlobalScope
