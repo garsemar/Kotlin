@@ -70,10 +70,20 @@ class UI {
                     * */
 
                     val input = message.text!!.split(" ")
+                    input.drop(0)
                     val word1 = places[message.chat.id]?.filter { it.name == input[1] }
                     val word2 = places[message.chat.id]?.filter { it.name == input[2] }
                     val routeList = mutableListOf<String>()
                     GlobalScope.async {
+                        for(i in input.indices){
+                            if(word1 == null){
+                                val ad = api.googleGeo(input[1]).results[0].geometry.location
+                                routeList.add("${ad.lat},${ad.lng}")
+                            }
+                            else{
+                                routeList.add(word1[message.chat.id.toInt()].cords)
+                            }
+                        }
                         if(word1 == null){
                             val ad = api.googleGeo(input[1]).results[0].geometry.location
                             routeList.add("${ad.lat},${ad.lng}")
@@ -82,7 +92,11 @@ class UI {
                             routeList.add(word1[message.chat.id.toInt()].cords)
                         }
                         if(word2 == null){
-                            api.googleGeo(input[2])
+                            val ad = api.googleGeo(input[2]).results[0].geometry.location
+                            routeList.add("${ad.lat},${ad.lng}")
+                        }
+                        else{
+                            routeList.add(word2[message.chat.id.toInt()].cords)
                         }
                     }
                     places[message.chat.id]?.forEach {
