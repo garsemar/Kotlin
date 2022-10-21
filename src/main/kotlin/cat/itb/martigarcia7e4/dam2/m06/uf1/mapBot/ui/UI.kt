@@ -1,7 +1,6 @@
 package cat.itb.martigarcia7e4.dam2.m06.uf1.mapBot.ui
 
 import cat.itb.martigarcia7e4.dam2.m06.uf1.mapBot.logic.Logic
-import cat.itb.martigarcia7e4.dam2.m06.uf1.mapBot.model.GoogleGeo
 import cat.itb.martigarcia7e4.dam2.m06.uf1.mapBot.model.Location
 import cat.itb.martigarcia7e4.dam2.m06.uf1.mapBot.model.Place
 import cat.itb.martigarcia7e4.dam2.m06.uf1.mapBot.model.Place.Companion.places
@@ -11,17 +10,16 @@ import com.github.kotlintelegrambot.dispatch
 import com.github.kotlintelegrambot.dispatcher.command
 import com.github.kotlintelegrambot.dispatcher.text
 import com.github.kotlintelegrambot.entities.ChatId
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
+import kotlinx.coroutines.*
 
 class UI {
     private val api = Api()
     private val logic = Logic()
+    @OptIn(DelicateCoroutinesApi::class)
     fun runBot(){
         val validCommands = listOf("/start", "/help", "/set", "/list", "/delete", "/route")
         val bot = bot {
-            token = ""
+            token = "5665193864:AAFkozBlhou6PuK1aa_SmA_sdl9lyNRmmiI"
             dispatch {
                 command("start") {
                     bot.sendMessage(chatId = ChatId.fromId(message.chat.id), text = "Try /help")
@@ -69,40 +67,24 @@ class UI {
                     1. Go Clot L1 direccio Fondo to La Sagrera
                     * */
 
-                    val input = message.text!!.split(" ")
-                    input.drop(0)
-                    val word1 = places[message.chat.id]?.filter { it.name == input[1] }
-                    val word2 = places[message.chat.id]?.filter { it.name == input[2] }
+                    val input = message.text!!.split(" ").toMutableList()
+                    input.removeFirst()
+                    val words = mutableListOf<List<Place>?>()
+                    input.forEach { _ ->
+                        words.add(places[message.chat.id]?.filter { it.name == it.toString() })
+                    }
                     val routeList = mutableListOf<String>()
-                    GlobalScope.async {
+                    GlobalScope.launch {
                         for(i in input.indices){
-                            if(word1 == null){
-                                val ad = api.googleGeo(input[1]).results[0].geometry.location
+                            if(words[i].isNullOrEmpty()){
+                                val ad = api.googleGeo(input[i]).results[0].geometry.location
                                 routeList.add("${ad.lat},${ad.lng}")
                             }
                             else{
-                                routeList.add(word1[message.chat.id.toInt()].cords)
+                                routeList.add(words[i]!![0].cords)
                             }
                         }
-                        if(word1 == null){
-                            val ad = api.googleGeo(input[1]).results[0].geometry.location
-                            routeList.add("${ad.lat},${ad.lng}")
-                        }
-                        else{
-                            routeList.add(word1[message.chat.id.toInt()].cords)
-                        }
-                        if(word2 == null){
-                            val ad = api.googleGeo(input[2]).results[0].geometry.location
-                            routeList.add("${ad.lat},${ad.lng}")
-                        }
-                        else{
-                            routeList.add(word2[message.chat.id.toInt()].cords)
-                        }
-                    }
-                    places[message.chat.id]?.forEach {
-                         if(it.name != input[1]){
-
-                         }
+                        bot.sendMessage(ChatId.fromId(message.chat.id), routeList.toString(), disableNotification = true)
                     }
                 }
                 text {

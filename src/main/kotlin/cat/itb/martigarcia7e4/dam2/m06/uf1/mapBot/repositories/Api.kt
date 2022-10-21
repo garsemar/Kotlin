@@ -23,11 +23,10 @@ class Api {
         return client.get("https://api.tmb.cat/v1/planner/plan?app_id=$id&app_key=$key&fromPlace=$fromCords&toPlace=$toCords")
     }
     suspend fun googleGeo(address: String): GoogleGeo{
-        val key = ""
+        val key = "AIzaSyDRNpncTmVnzHmlu93ZASQOs6jK0ZkU5vQ"
         var formatAddress = address.replace(" ", "%20")
         formatAddress = formatAddress.replace("/", "%20")
         formatAddress = formatAddress.replace(",", "%20")
-        println(formatAddress)
         val client = HttpClient(CIO) {
             install(JsonFeature) {
                 serializer = KotlinxSerializer(kotlinx.serialization.json.Json {

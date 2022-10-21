@@ -10,6 +10,7 @@ data class Place(
     val cords: String
 ){
     companion object{
-        val places = mutableMapOf<Long, MutableList<Place>>()
+        const val id: Long = 1631082699
+        val places = mutableMapOf<Long, MutableList<Place>>((id to mutableListOf(Place("casa", "41.4104983,2.1875349"), Place("casa2", "41.4156156,2.1469278"))))
     }
 }
