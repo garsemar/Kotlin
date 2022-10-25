@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.10"
+    kotlin("jvm") version "1.7.10"
     kotlin("plugin.serialization") version "1.6.10"
 }
 
@@ -25,8 +25,15 @@ dependencies {
     implementation("io.github.pdvrieze.xmlutil:core-jvm:0.84.2")
     implementation("io.github.pdvrieze.xmlutil:serialization-jvm:0.84.2")
     implementation("io.github.kotlin-telegram-bot.kotlin-telegram-bot:telegram:6.0.7")
+    implementation("org.jetbrains.exposed:exposed-core:0.40.1")
+    implementation("org.jetbrains.exposed:exposed-dao:0.40.1")
+    implementation("org.jetbrains.exposed:exposed-jdbc:0.40.1")
+    implementation("com.h2database:h2:2.1.214")
+    implementation("org.slf4j:slf4j-api:2.0.3")
+    implementation("org.slf4j:slf4j-jdk14:2.0.3")
     testImplementation(kotlin("test"))
 }
+
 
 tasks.test {
     useJUnit()
