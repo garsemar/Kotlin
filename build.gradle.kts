@@ -31,6 +31,7 @@ dependencies {
     implementation("com.h2database:h2:2.1.214")
     implementation("org.slf4j:slf4j-api:2.0.3")
     implementation("org.slf4j:slf4j-jdk14:2.0.3")
+    implementation("org.postgresql:postgresql:42.2.2")
     testImplementation(kotlin("test"))
 }
 

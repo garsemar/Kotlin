@@ -15,5 +15,12 @@
       <jdbc-url>jdbc:h2:./h2dbfile</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="Kotlin@sv.garsemar.com" uuid="c8540f72-468a-45c3-8644-8ae1f5ba14e7">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://sv.garsemar.com:5432/Kotlin</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
