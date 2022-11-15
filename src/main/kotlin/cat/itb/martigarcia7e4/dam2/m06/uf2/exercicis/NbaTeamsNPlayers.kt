@@ -4,12 +4,13 @@ import cat.itb.martigarcia7e4.dam2.m06.uf2.exercicis.players.height
 import cat.itb.martigarcia7e4.dam2.m06.uf2.exercicis.players.name
 import cat.itb.martigarcia7e4.dam2.m06.uf2.exercicis.players.nameiteam
 import cat.itb.martigarcia7e4.dam2.m06.uf2.exercicis.players.weight
+import cat.itb.martigarcia7e4.dam2.m06.uf2.exercicis.teams.division
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
-object players: IntIdTable(){
+object players : IntIdTable() {
     val name = varchar("name", 30)
     val height = varchar("height", 4)
     val weight = integer("weight")
@@ -17,7 +18,7 @@ object players: IntIdTable(){
     val nameiteam = varchar("nameiteam", 20) references teams.name
 }
 
-object teams: Table(){
+object teams : Table() {
     val name = varchar("name", 20)
     val city = varchar("city", 20)
     val conference = varchar("conference", 4)
@@ -26,42 +27,52 @@ object teams: Table(){
 }
 
 fun main() {
-    Database.connect("jdbc:postgresql://sv.garsemar.com:5432/Kotlin", driver = "org.postgresql.Driver", user = "garsemar", password = "sserra12")
+    Database.connect(
+        "jdbc:postgresql://localhost:5432/postgres",
+        driver = "org.postgresql.Driver",
+        user = "sjo",
+        password = "sjo"
+    )
+
+    val scan = Scanner(System.`in`)
 
     transaction {
-        //SchemaUtils.create(Entrenament2)
+        val team = allTeams()
+        /*println(findCity(scan))*/
 
-        /*val scan = Scanner(System.`in`)
-
-        Entrenament.insert {
-            it[name] = scan.next()
-            it[duration] = scan.nextInt()
-        } get Entrenament.id*/
-
-        val query: Query = players.selectAll()
-
-        val teams1 = mutableListOf<String>()
-
-        query.forEach {
-            if(it[nameiteam] !in teams1){
-                teams1.add(it[nameiteam])
-            }
-        }
-
-        //println(teams)
-        val awd = players.join(teams, JoinType.INNER, additionalConstraint = {teams.name eq players.nameiteam})
-            .slice(name, teams.city)
+        val player = players.join(teams, JoinType.INNER, additionalConstraint = {teams.name eq players.nameiteam})
+            .slice(name, height, nameiteam, teams.division)
             .selectAll()
 
-        awd.forEach {
-            println(it)
+        val player2 = player.filter { it[division] == "Atlantic" }.map { it[name] to listOf(it[height], it[nameiteam], it[teams.division]) }
+        player2.forEach {
+            println(it.second[2])
         }
 
-        /*query.forEach {
-            println(it[name])
-            println(it[height])
-            println(it[weight])
-            println(it[nameiteam])
-        }*/
+        for(i in team.indices){
+            val pla = player2.filter { it.second[1] == team[i] }.maxBy { it.second[0] }
+            println("${pla.first}, ${pla.second[0]}")
+        }
     }
+}
+
+fun allTeams(): MutableList<String> {
+    val teams1 = mutableListOf<String>()
+    val query: Query = players.selectAll()
+
+    query.forEach {
+        if (it[nameiteam] !in teams1) {
+            teams1.add(it[nameiteam])
+        }
+    }
+
+    return teams1
+}
+
+fun findCity(scan: Scanner): String? {
+    val player = players.join(teams, JoinType.INNER, additionalConstraint = {teams.name eq players.nameiteam})
+        .slice(name, teams.city)
+        .selectAll()
+
+    return player.map { it[name] to it[teams.city] }.find { it.first == scan.nextLine() }?.second
 }
