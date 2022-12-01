@@ -28,31 +28,17 @@ object teams : Table() {
 
 fun main() {
     Database.connect(
-        "jdbc:postgresql://localhost:5432/postgres",
+        "jdbc:postgresql://sv.garsemar.com:5432/Kotlin",
         driver = "org.postgresql.Driver",
-        user = "sjo",
-        password = "sjo"
+        user = "garsemar",
+        password = "sserra12"
     )
 
     val scan = Scanner(System.`in`)
 
     transaction {
-        val team = allTeams()
-        /*println(findCity(scan))*/
-
-        val player = players.join(teams, JoinType.INNER, additionalConstraint = {teams.name eq players.nameiteam})
-            .slice(name, height, nameiteam, teams.division)
-            .selectAll()
-
-        val player2 = player.filter { it[division] == "Atlantic" }.map { it[name] to listOf(it[height], it[nameiteam], it[teams.division]) }
-        player2.forEach {
-            println(it.second[2])
-        }
-
-        for(i in team.indices){
-            val pla = player2.filter { it.second[1] == team[i] }.maxBy { it.second[0] }
-            println("${pla.first}, ${pla.second[0]}")
-        }
+        println(findCity(scan))
+        tallestPlayers()
     }
 }
 
@@ -75,4 +61,21 @@ fun findCity(scan: Scanner): String? {
         .selectAll()
 
     return player.map { it[name] to it[teams.city] }.find { it.first == scan.nextLine() }?.second
+}
+
+fun tallestPlayers() {
+    val team = allTeams()
+    val player = players.join(teams, JoinType.INNER, additionalConstraint = {teams.name eq players.nameiteam})
+        .slice(name, height, nameiteam, division)
+        .selectAll()
+
+    val player2 = player.filter { it[division] == "Atlantic" }.map { it[name] to listOf(it[height], it[nameiteam], it[division]) }
+
+    for(i in team.indices){
+        val pla = player2.filter { it.second[1] == team[i] }
+        if(pla.isNotEmpty()){
+            val result = pla.maxBy { it.second[0] }
+            println("${result.second[1]}: ${result.first},  ${result.second[0]}")
+        }
+    }
 }
