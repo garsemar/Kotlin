@@ -4,6 +4,10 @@ import java.io.File
 
 val winPoints = mapOf("win" to 6, "draw" to 3, "loss" to 0)
 
+val winCondition = mapOf("X" to "loss", "Y" to "draw", "Z" to "win")
+
+val points = mapOf("A" to 1, "B" to 2, "C" to 3, "X" to 1, "Y" to 2, "Z" to 3)
+
 var score = 0
 
 fun main() {
@@ -12,30 +16,17 @@ fun main() {
     /*
     1 for Rock, 2 for Paper, and 3 for Scissors
     0 lost, 3 draw, 6 won
-
-    A X
-A Y
-A Z
-B X
-B Y
-B Z
-C X
-C Y
-C Z
+    X lose, Y draw, Z win
      */
-    val file = File("src/main/resources/adventOfCode/input2.txt")
+    val file = File("src/main/resources/adventOfCode/input2.txt").readLines().map { it.split(" ") }
 
-    val points = mapOf("A" to 1, "B" to 2, "C" to 3, "X" to 1, "Y" to 2, "Z" to 3)
-
-    val lines = file.readLines()
-    val defList = MutableList(lines.size) { listOf<String>() }
-    for(i in lines.indices){
-        defList[i] = lines[i].split(" ")
-    }
-    for(i in defList.indices){
-        checkWin(listOf(points[defList[i][0]], points[defList[i][1]]))
+    for(i in file.indices){
+        checkWin(listOf(points[file[i][0]], points[file[i][1]]))
     }
 
+    println(score)
+
+    secondScore(file)
     println(score)
 }
 
@@ -60,5 +51,39 @@ fun checkWin(play: List<Int?>){
 
 fun addScore(points: Int, status: String) {
     score += points+winPoints[status]!!
-    println(status)
+}
+
+fun secondScore(defList: List<List<String>>){
+    score = 0
+    var status = ""
+    for(i in defList.indices){
+        status = winCondition[defList[i][1]].toString()
+        when(status){
+            "win" -> win(listOf(points[defList[i][0]], points[defList[i][1]]))
+            "loss" -> loss(listOf(points[defList[i][0]], points[defList[i][1]]))
+            "draw" -> draw(listOf(points[defList[i][0]], points[defList[i][1]]))
+        }
+    }
+}
+
+fun win(list: List<Int?>){
+    score += if(list[0] != 3){
+        (list[0]!!+1)+6
+    }
+    else{
+        1+6
+    }
+}
+
+fun loss(list: List<Int?>){
+    score += if(list[0] != 1){
+        (list[0]!!-1)+0
+    }
+    else{
+        3+0
+    }
+}
+
+fun draw(list: List<Int?>){
+    score += list[0]!!+3
 }
