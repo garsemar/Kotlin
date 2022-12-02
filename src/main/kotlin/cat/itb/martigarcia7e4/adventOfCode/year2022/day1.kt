@@ -27,6 +27,7 @@ fun matrixOfFile(): MutableList<MutableList<Int>> {
             j += 1
         }
     }
+    println(listOfList)
     return listOfList
 }
 
