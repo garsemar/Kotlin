@@ -1,33 +1,42 @@
 package cat.itb.martigarcia7e4.adventOfCode.year2022
 
-import java.io.File
+import kotlin.io.path.Path
+import kotlin.io.path.readLines
 
 val dictionary = mutableMapOf<Char, Int>()
-val scoreList = mutableListOf<Int>()
 
 fun main() {
-    val file = File("src/main/resources/adventOfCode/input3.txt").readLines().map { it.chunked(it.length/2) }
+    val file = Path("src/main/resources/adventOfCode/input3.txt").readLines().map { it.split("").filter { it != "" } }
+
     createPriority()
-    file.forEach{
-        part1(it)
-    }
-    println(scoreList.sum())
+
+    println(part1(file))
+
+    println(part2(file))
 }
 
-fun part1(file: List<String>){
-    val usedLetters = mutableListOf<Char>()
-    for(i in file.indices){
-        for(j in file[i]){
-            if(i == 0 && j in file[i+1]){
-                if(j !in usedLetters){
-                    scoreList.add(dictionary[j]!!)
-                    usedLetters.add(j)
-                }
-            }
-        }
+fun part1(list: List<List<String>>): Int {
+    var score = 0
+    for(i in list.indices){
+        val compoment = Pair(list[i].subList(0, list[i].size/2), list[i].subList(list[i].size/2, list[i].size))
+        val repeat = checkRepeat(compoment.first, compoment.second)
+        score += dictionary[repeat.first()]!!
     }
+    return score
+}
 
-    // println(file.groupingBy { it }.eachCount().filter { it.value > 1 })
+fun part2(file: List<List<String>>): Int {
+    val badge = file.windowed(3, 3)
+    var score = 0
+    for(i in badge.indices){
+        val common = badge[i][0].intersect(badge[i][1]).intersect(badge[i][2]).single()
+        score += dictionary[common.first()]!!
+    }
+    return score
+}
+
+fun checkRepeat(first: List<String>, second: List<String>): String {
+    return first.intersect(second).first()
 }
 
 fun createPriority(){
