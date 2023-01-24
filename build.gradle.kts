@@ -32,6 +32,7 @@ dependencies {
     implementation("org.slf4j:slf4j-api:2.0.3")
     implementation("org.slf4j:slf4j-jdk14:2.0.3")
     implementation("org.postgresql:postgresql:42.2.2")
+    implementation("org.mongodb:mongodb-driver-sync:4.7.1")
     testImplementation(kotlin("test"))
 }
 
