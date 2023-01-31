@@ -13,9 +13,11 @@ open class Sport(
     @PrimaryKey
     var _id: ObjectId = ObjectId.get(),
     var sport: String = "",
-    var duration_minutes: Int = 0
+    var duration_minutes: Int = 0,
+    var owner_id: String = ""
 ) : RealmObject {
         // Declaring empty contructor
+        constructor() : this(owner_id = "") {}
         //var doAfter: RealmList<Item>? = realmListOf()
         override fun toString() = "Sport($sport, $duration_minutes)"
 }
