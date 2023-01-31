@@ -1,7 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.10"
+    id("io.realm.kotlin") version "1.5.0"
+    kotlin("jvm") version "1.7.21"
     kotlin("plugin.serialization") version "1.6.10"
 }
 
@@ -33,6 +34,8 @@ dependencies {
     implementation("org.slf4j:slf4j-jdk14:2.0.3")
     implementation("org.postgresql:postgresql:42.2.2")
     implementation("org.mongodb:mongodb-driver-sync:4.7.1")
+    implementation("io.realm.kotlin:library-sync:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     testImplementation(kotlin("test"))
 }
 
