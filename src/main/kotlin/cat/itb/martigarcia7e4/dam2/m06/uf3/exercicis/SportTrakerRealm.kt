@@ -9,7 +9,7 @@ import kotlinx.coroutines.*
 import org.bson.types.ObjectId
 import java.util.*
 
-open class Sport(
+open class Sport2(
     @PrimaryKey
     var _id: ObjectId = ObjectId.get(),
     var sport: String = "",
@@ -30,7 +30,7 @@ fun main() {
     // .directory("customPath")
     .build()
     println("Realm Path: ${config.path}")
-    val realm = Realm.open(config)
+     val realm = Realm.open(config)
 
     realm.writeBlocking {
         val item = Sport(sport = scan.next(), duration_minutes = scan.nextInt())
@@ -48,9 +48,9 @@ fun main() {
         realm.close()
     }*/
 
-    GlobalScope.launch {
+    /*GlobalScope.launch {
         realm.query<Sport>().find().asFlow().collect{
             println(it.list.map{it.sport})
         }
-    }
+    }*/
 }
