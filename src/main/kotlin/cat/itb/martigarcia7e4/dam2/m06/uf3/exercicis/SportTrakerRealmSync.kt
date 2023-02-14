@@ -29,7 +29,7 @@ val realmApp = App.create(AppConfiguration.Builder("kotlin-sync-ifcih").build())
 
 val scan = Scanner(System.`in`)
 
-fun main(){
+suspend fun main(){
     //login("itb", "contrasenyamuysegura")
     println("1: Login, 2: Register, 0: Exit")
     val input = scan.nextInt()
@@ -79,16 +79,17 @@ fun ui(){
         }
         realm.subscriptions.refresh()
 
+        println(user.id)
         println(realm.query<Sport>("owner_id = '${user.id}'").find())
     }
 }
 
-fun login(user: String, pass: String) = GlobalScope.launch {
+suspend fun login(user: String, pass: String) {
     val creds: Credentials = Credentials.emailPassword(user, pass)
     realmApp.login(creds)
 }
 
-fun register(user: String, pass: String) = GlobalScope.launch {
+suspend fun register(user: String, pass: String) {
     realmApp.emailPasswordAuth.registerUser(user, pass)
     login(user, pass)
 }
