@@ -1,14 +1,18 @@
 package garsemar
 
 import java.sql.Connection
-import java.sql.DatabaseMetaData
 import java.sql.DriverManager
 import java.sql.SQLException
+import java.util.Scanner
 import kotlin.io.path.Path
 import kotlin.io.path.listDirectoryEntries
 
+
 fun main() {
-    val files = Path("src/main/kotlin/garsemar/categories").listDirectoryEntries()
+    val scan = Scanner(System.`in`)
+    println("Directory path:")
+    // "src/main/kotlin/garsemar/categories"
+    val files = Path(scan.next()).listDirectoryEntries()
 
     val url = "jdbc:postgresql://trumpet.db.elephantsql.com:5432/rwndjpvi"
     val user = "rwndjpvi"
@@ -19,14 +23,14 @@ fun main() {
     val statement = connection.createStatement()
 
     files.forEach { it ->
-        val file = it.toFile().readLines().map { it.replace("\"", "").split(";") }
-        val name = it.fileName.toString().split(".")[0]
+        val file = it.toFile().readLines().drop(1).map { it.replace("\"", "").split(";") }
+        val name = it.fileName.toString().split(".")[0].lowercase()
 
         val sql = """
          CREATE TABLE $name (
             ID serial primary key,
             nom varchar(100),
-            informacion varchar(200),
+            informacion varchar(300),
             contacto varchar(100),
             horarios varchar(100),
             web varchar(100),
@@ -39,13 +43,18 @@ fun main() {
         }
 
         for(i in file){
-            for(j in i){
-                val insert = """
-                    insert into $name values (${j[0]}, ${j[1]}, ${j[2]}, ${j[3]}, ${j[4]}, ${j[5]})
-                """.trimMargin()
+            val insert = connection.prepareStatement(
+            "insert into $name (nom, informacion, contacto, horarios, web, direccion)" +
+                    "values (?, ?, ?, ?, ?, ?);"
+            )
+            insert.setString(1, i[0])
+            insert.setString(2, i[1])
+            insert.setString(3, i[2])
+            insert.setString(4, i[3])
+            insert.setString(5, i[4])
+            insert.setString(6, i[5])
 
-                statement.execute(insert)
-            }
+            insert.executeUpdate()
         }
     }
 
@@ -55,7 +64,14 @@ fun main() {
 
 @Throws(SQLException::class)
 fun tableExists(connection: Connection, tableName: String?): Boolean {
-    val meta: DatabaseMetaData = connection.metaData
-    val resultSet = meta.getTables(null, null, tableName, arrayOf("TABLE"))
-    return resultSet.next()
+    val preparedStatement = connection.prepareStatement(
+        "SELECT count(*) "
+                + "FROM information_schema.tables "
+                + "WHERE table_name = ?"
+                + "LIMIT 1;"
+    )
+    preparedStatement.setString(1, tableName)
+    val resultSet = preparedStatement.executeQuery()
+    resultSet.next()
+    return resultSet.getInt(1) != 0
 }
