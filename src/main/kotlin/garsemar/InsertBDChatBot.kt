@@ -23,18 +23,18 @@ fun main() {
     val statement = connection.createStatement()
 
     files.forEach { it ->
-        val file = it.toFile().readLines().drop(1).map { it.replace("\"", "").split(";") }
+        val file: List<MutableList<String>> = it.toFile().readLines().drop(1).map { it.replace("\"", "").split(";").toMutableList() }
         val name = it.fileName.toString().split(".")[0].lowercase()
 
         val sql = """
          CREATE TABLE $name (
             ID serial primary key,
-            nom varchar(100),
-            informacion varchar(300),
-            contacto varchar(100),
-            horarios varchar(100),
-            web varchar(100),
-            direccion varchar(100)
+            nom varchar(500),
+            informacion varchar(500),
+            contacto varchar(500),
+            horarios varchar(500),
+            web varchar(500),
+            direccion varchar(500)
             )
         """.trimMargin()
 
@@ -42,17 +42,27 @@ fun main() {
             statement.execute(sql)
         }
 
-        for(i in file){
+        for(i in file.indices){
+            println(name)
+            if(file[i].size < 6){
+                file[i+1].forEach {
+                    println("line: $i")
+                    println("number: ${file[i].size}")
+                    println(file[i])
+                    file[i].add(it)
+                }
+                file.drop(i+1)
+            }
             val insert = connection.prepareStatement(
             "insert into $name (nom, informacion, contacto, horarios, web, direccion)" +
                     "values (?, ?, ?, ?, ?, ?);"
             )
-            insert.setString(1, i[0])
-            insert.setString(2, i[1])
-            insert.setString(3, i[2])
-            insert.setString(4, i[3])
-            insert.setString(5, i[4])
-            insert.setString(6, i[5])
+            insert.setString(1, file[i][0])
+            insert.setString(2, file[i][1])
+            insert.setString(3, file[i][2])
+            insert.setString(4, file[i][3])
+            insert.setString(5, file[i][4])
+            insert.setString(6, file[i][5])
 
             insert.executeUpdate()
         }
