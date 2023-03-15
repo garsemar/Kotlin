@@ -21,7 +21,7 @@ fun main() {
         println(name)
 
         val sql = """
-         drop table $name
+         drop table $name cascade
         """.trimMargin()
 
         statement.execute(sql)
