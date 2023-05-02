@@ -63,7 +63,6 @@ fun ui(){
         }
         .waitForInitialRemoteData()
         .build()
-    println("Realm Path: ${config.path}")
     val realm = Realm.open(config)
     GlobalScope.launch {
         realm.subscriptions.waitForSynchronization()

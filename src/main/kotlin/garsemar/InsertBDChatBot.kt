@@ -10,7 +10,7 @@ fun main() {
     val scan = Scanner(System.`in`)
     println("Directory path:")
     // "src/main/kotlin/garsemar/categories"
-    val files = Path(scan.next()).listDirectoryEntries()
+    val files = Path(scan.next()).listDirectoryEntries().sortedBy { it.fileName.toString().split(" ")[0].toInt() }
 
     val url = "jdbc:postgresql://trumpet.db.elephantsql.com:5432/rwndjpvi"
     val user = "rwndjpvi"
@@ -49,9 +49,30 @@ fun main() {
         statement.execute(sqlItems)
     }
 
+    val sqlEvents = """
+         CREATE TABLE items (
+            ID serial primary key,
+            idCat integer,
+            nom varchar(500),
+            informacion varchar(500),
+            contacto varchar(500),
+            horarios varchar(500),
+            web varchar(500),
+            direccion varchar(500),
+            
+            constraint fk_categories foreign key (idCat) references categories(ID)
+            )
+        """.trimMargin()
+    if(!tableExists(connection, "items")){
+        println("items")
+        statement.execute(sqlItems)
+    }
+
     files.forEach { it ->
         val file: List<MutableList<String>> = it.toFile().readLines().drop(1).map { it.replace("\"", "").split(";").toMutableList() }
-        val name = it.fileName.toString().split(".")[0].lowercase()
+        val name = it.fileName.toString().split(" ")[1].split(".")[0].lowercase()
+
+        println(name)
 
         val insertCat = connection.prepareStatement(
             "insert into categories (nom)" +
