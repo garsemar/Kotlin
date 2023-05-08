@@ -24,7 +24,7 @@ fun main() {
          CREATE TABLE categories (
             ID serial primary key,
             nom varchar(500)
-            )
+        )
         """.trimMargin()
     if(!tableExists(connection, "categories")){
         println("cat")
@@ -42,30 +42,39 @@ fun main() {
             direccion varchar(500),
             
             constraint fk_categories foreign key (idCat) references categories(ID)
-            )
+        )
         """.trimMargin()
     if(!tableExists(connection, "items")){
         println("items")
         statement.execute(sqlItems)
     }
 
-    val sqlEvents = """
-         CREATE TABLE items (
+    val sqlEventsNoticias = """
+         CREATE TABLE eventsNoticias (
             ID serial primary key,
-            idCat integer,
-            nom varchar(500),
-            informacion varchar(500),
-            contacto varchar(500),
-            horarios varchar(500),
-            web varchar(500),
-            direccion varchar(500),
-            
-            constraint fk_categories foreign key (idCat) references categories(ID)
-            )
+            titulo varchar(500),
+            informacion varchar(1000),
+            links varchar(400),
+            event boolean not null
+        )
         """.trimMargin()
-    if(!tableExists(connection, "items")){
-        println("items")
-        statement.execute(sqlItems)
+    if(!tableExists(connection, "eventsNoticias")){
+        println("eventsNoticias")
+        statement.execute(sqlEventsNoticias)
+    }
+
+    val sqlImg = """
+         CREATE TABLE img (
+            ID serial primary key,
+            idEvent integer,
+            img varchar(100),
+            
+            constraint fk_img foreign key (idEvent) references eventsNoticias(ID)
+        )
+        """.trimMargin()
+    if(!tableExists(connection, "img")){
+        println("img")
+        statement.execute(sqlImg)
     }
 
     files.forEach { it ->
