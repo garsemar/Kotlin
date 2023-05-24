@@ -1,4 +1,4 @@
-package garsemar
+package garsemar.botTN
 
 import java.sql.DriverManager
 import java.util.Scanner
